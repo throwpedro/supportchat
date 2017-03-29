@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <style>
+        /*my styling*/
+        
+        html {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        
+        *,
+        *:before,
+        *:after {
+            -webkit-box-sizing: inherit;
+            -moz-box-sizing: inherit;
+            box-sizing: inherit;
+        }
+
+        ::-webkit-scrollbar{
+            display: none;
+        }
+
+        .chatwrapper {
+            overflow: hidden;
+            position: fixed;
+            bottom: 1%;
+            right: 1%;
+            width: 18em;
+            height: 22em;
+            align-content: center;
+            border-style: solid;
+            border-color: grey;
+            border-width: 1px;
+            border-radius: 0.5em;
+            z-index: 2147483647;
+        }
+        /*chattop*/
+        
+        .chattop {
+            overflow: hidden;
+            width: 100%;
+            background-color: #0398cc;
+            height: 3.5em;
+        }
+        
+        .chatclose {
+            width: 40%;
+            margin-top: 1.25em;
+            max-height: 1.1em;
+            float: right;
+        }
+        
+        .chatnamewrapper {
+            width: 70%;
+            float: left;
+            max-height: 2em;
+            margin-left: 0.5em;
+        }
+        
+        .chatname {
+            width: 100%;
+            max-height: 2em;
+            text-align: left;
+            margin-top: 1.25em;
+            font-family: 'Varela Round', sans-serif;
+            color: white;
+        }
+        
+        .chatclosewrapper {
+            width: 25%;
+            float: left;
+        }
+        /*chatbody*/
+        
+        .chatbodywrapper {
+            margin-top: 0px;
+            width: 100%;
+            height: 59%;
+            overflow: hidden;
+        }
+        
+        #messages {
+            list-style: none;
+            display: inline-block;
+            overflow-y: scroll;
+            height: 150px;
+            width: 100%;
+        }
+        
+        .chatmessage {
+            float: right;
+            background-color: lightgrey;
+            width: 60%;
+            padding: 5px 8px;
+            margin-right: 3px;
+            margin: 3px;
+            border: none;
+            border-radius: 10px;
+            border-top-right-radius: 0px;
+            word-wrap: break-word;
+            font-family: 'Varela Round', sans-serif;
+        }
+        /*chatbottom*/
+        
+        .chatbottom {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            height: 25%;
+        }
+        
+        .chatinputwrapper {
+            width: 100%;
+            align-content: center;
+            bottom: 0;
+            height: 100%
+        }
+        
+        .chatform {
+            width: 100%;
+            align-content: center;
+            bottom: 0;
+            height: 100%;
+        }
+        
+        #m {
+            width: 100%;
+            padding: 15px 15px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            min-height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!--my form-->
+    <div class="chatwrapper">
+        <div class="chattop">
+            <div class="chatnamewrapper">
+                <p class="chatname">Hr-skyen support</p>
+            </div>
+            <div class="chatclosewrapper"><img src="close.png" alt="Close button" class="chatclose"></div>
+        </div>
+        <div class="chatbodywrapper">
+            <div id="messages">
+
+            </div>
+            <!-- <ul id="messages"></ul>-->
+        </div>
+        <div class="chatbottom">
+            <div class="chatinputwrapper">
+                <form action="" class="chatform">
+                    <textarea autocomplete="off" id="m" placeholder="Type here and hit enter to send"></textarea>
+                    <button style="visibility: hidden" id="sendButton">send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var room = "";
+        $(function () {
+            var socket = io.connect('localhost', { port: 3000 });
+
+            socket.on('connectToRoom', function (data) {
+                room = data;
+                console.log(data);
+            });
+
+            $('#m').keypress(function (e) {
+                if (e.which == 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $('#sendButton').trigger('click');
+                }
+            });
+
+            $('form').submit(function () {
+                socket.emit('chat message', $('#m').val(), room);
+                $('#m').val('');
+                return false;
+
+            });
+            socket.on('chat message', function (msg) {
+                $('#messages').append($('<div class="chatmessage">').text(msg));
+                $('#messages').scrollTop(100000);
+            });
+        });
+    </script>
+</body>
+
+</html>
