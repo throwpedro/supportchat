@@ -38,6 +38,26 @@ body {
     background-color: #f7f7f9;
 }
 
+.mainchatheader{
+    height: 10%;
+}
+
+.mainchatbody{
+    height: 70%;
+}
+
+.chatbottom{
+    height: 20%;
+}
+
+.chatform{
+    height: 100%;
+}
+
+.chatform textarea{
+    height: 100%;
+}
+
 /*right bar*/
 .rightchatwrapper{
     position: inherit;
@@ -53,3 +73,4 @@ body {
 .companytitle{
     color: #bbc0cf;
 }
+
