@@ -1,0 +1,46 @@
+html{
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    height: 100%;
+}
+
+.pagewrapper{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+
+}
+
+/*left bar*/
+.leftchatwrapper{
+    position: inherit;
+    height: 100%;
+    bottom: 0;
+    background-color: #4f4f4f;
+}
+
+.title{
+    color: #bbc0cf;
+}
+
+/*center*/
+.mainchatwrapper{
+    position: inherit;
+    height: 100%;
+    bottom: 0;
+}
+
+/*right bar*/
+.rightchatwrapper{
+    position: inherit;
+    height: 100%;
+    bottom: 0;
+    background-color: #4f4f4f;
+}
+
