@@ -20,11 +20,11 @@
             -moz-box-sizing: inherit;
             box-sizing: inherit;
         }
-
-        ::-webkit-scrollbar{
+        
+         ::-webkit-scrollbar {
             display: none;
         }
-
+        
         .chatwrapper {
             overflow: hidden;
             position: fixed;
@@ -92,7 +92,7 @@
             width: 100%;
         }
         
-        .chatmessage {
+        .chatmessagesend{
             float: right;
             background-color: lightgrey;
             width: 60%;
@@ -102,6 +102,21 @@
             border: none;
             border-radius: 10px;
             border-top-right-radius: 0px;
+            word-wrap: break-word;
+            font-family: 'Varela Round', sans-serif;
+
+        }
+
+        .chatmessagereceived {
+            float: left;
+            background-color: #0098cc;
+            width: 60%;
+            padding: 5px 8px;
+            margin-left: 3px;
+            margin: 3px;
+            border: none;
+            border-radius: 10px;
+            border-top-left-radius: 0px;
             word-wrap: break-word;
             font-family: 'Varela Round', sans-serif;
         }
@@ -115,10 +130,11 @@
         }
         
         .chatinputwrapper {
-            width: 100%;
+            width: 85%;
             align-content: center;
             bottom: 0;
-            height: 100%
+            height: 100%;
+            float: left;
         }
         
         .chatform {
@@ -136,6 +152,31 @@
             border-radius: 4px;
             box-sizing: border-box;
             min-height: 100%;
+        }
+        
+        #sendButton {
+            float: left;
+            width: 100%;
+            background-color: #0098cc;
+            height: 2em;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 3px;
+            border-color: #0098cc;
+            color: #ccc;
+            bottom: 0;
+        }
+        
+        .chaticons {
+            float: left;
+            width: 15%;
+            border-top-style: solid;
+            border-top-width: 1px;
+            border-top-color: #ccc;
+        }
+        
+        #screenshoticon {
+            width: 100%;
         }
     </style>
 </head>
@@ -159,8 +200,15 @@
             <div class="chatinputwrapper">
                 <form action="" class="chatform">
                     <textarea autocomplete="off" id="m" placeholder="Type here and hit enter to send"></textarea>
-                    <button style="visibility: hidden" id="sendButton">send</button>
                 </form>
+            </div>
+            <div class="chaticons">
+                <div class="screenshoticonwrapper">
+                    <img id="screenshoticon" src="screenshot.ico" alt="Screenshot not supported">
+                </div>
+                <div class="buttonwrapper">
+                    <button id="sendButton">send</button>
+                </div>
             </div>
         </div>
     </div>
@@ -184,14 +232,22 @@
                 }
             });
 
+            $('#sendButton').click(function(){
+                $('form').submit();
+            });
+
             $('form').submit(function () {
+                var txt = $('#m').val();
+                console.log(txt);
                 socket.emit('chat message', $('#m').val(), room);
+                $('#messages').append($('<div class="chatmessagesend">').text(txt));
                 $('#m').val('');
                 return false;
 
             });
             socket.on('chat message', function (msg) {
-                $('#messages').append($('<div class="chatmessage">').text(msg));
+                console.log("hi");
+                $('#messages').append($('<div class="chatmessagereceived">').text(msg));
                 $('#messages').scrollTop(100000);
             });
         });

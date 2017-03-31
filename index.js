@@ -29,18 +29,20 @@ io.on('connection', function (socket) {
   });*/
   //send to everyone in the room
   io.sockets.in("room-" + roomNo).emit('connectToRoom', "room-" + roomNo);
- 
+  
 });
 
-var socketsconnected = io.sockets.sockets;
+
+
+//var socketsconnected = io.sockets.sockets;
+
 
 io.on('connection', function (socket) {
-  //console.log(Object.keys(socketsconnected));
-  //console.log(Object.keys(socketsconnected).length);
   socket.on('chat message', function (msg, roomName) {
+    
     // console.log(io.sockets.adapter.rooms);
-    console.log(msg, roomName);
-    io.to(roomName).emit('chat message', msg);
+    // console.log(msg, roomName);
+    socket.broadcast.to(roomName).emit('chat message', msg);
   });
 });
 
