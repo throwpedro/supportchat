@@ -238,15 +238,14 @@
 
             $('form').submit(function () {
                 var txt = $('#m').val();
-                console.log(txt);
                 socket.emit('chat message', $('#m').val(), room);
                 $('#messages').append($('<div class="chatmessagesend">').text(txt));
+                $('#messages').scrollTop(100000);
                 $('#m').val('');
                 return false;
 
             });
             socket.on('chat message', function (msg) {
-                console.log("hi");
                 $('#messages').append($('<div class="chatmessagereceived">').text(msg));
                 $('#messages').scrollTop(100000);
             });
