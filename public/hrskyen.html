@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles/hrskyen.css">
-    <!-- Latest compiled and minified CSS -->
+    <!--     Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- jQuery library -->
@@ -35,10 +35,10 @@
 
             </div>
             <div class="chatbottom">
-                    <form action="" class="chatform col-sm-12">
-                        <textarea class="col-sm-12" autocomplete="off" id="m" placeholder="Type here and hit enter to send"></textarea>
-                        <button style="visibility: hidden" id="sendButton">send</button>
-                    </form>
+                <form action="" class="chatform col-sm-12">
+                    <textarea class="col-sm-12" autocomplete="off" id="m" placeholder="Type here and hit enter to send"></textarea>
+                    <button style="visibility: hidden" id="sendButton">send</button>
+                </form>
             </div>
         </div>
         <div class="rightchatwrapper col-sm-3">
@@ -54,6 +54,19 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var room = "";
+        $(function () {
+            var socket = io.connect('localhost', { port: 3000 });
+
+            socket.on('connectToRoom', function (data) {
+                room = data;
+                console.log(data);
+            });
+        });
+    </script>
 </body>
 
 </html>
