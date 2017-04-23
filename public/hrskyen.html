@@ -22,7 +22,7 @@
         <div class="leftchatwrapper col-sm-3">
             <div class="leftchatheader col-sm-12">
                 <p class="title">Chat Conversations</p>
-                
+                <div class="chatconversations"></div>
             </div>
         </div>
         <div class="mainchatwrapper col-sm-6">
@@ -37,7 +37,7 @@
             </div>
             <div class="chatbottom">
                 <form action="" class="chatform col-sm-12">
-                    <textarea class="col-sm-12" autocomplete="off" id="m" placeholder="Type here and hit enter to send"></textarea>
+                    <textarea id="m" class="col-sm-12" autocomplete="off" id="m" placeholder="Type here and hit enter to send"></textarea>
                     <button style="visibility: hidden" id="sendButton">send</button>
                 </form>
             </div>
@@ -55,9 +55,6 @@
             </div>
         </div>
     </div>
-    <div class="insertonchat">
-
-    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
@@ -68,9 +65,40 @@
             socket.on('connectToRoom', function (data) {
                 room = data;
                 console.log(data);
+                appendchat();
+            });
+
+            $('#m').keypress(function (e) {
+                if (e.which == 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $('#sendButton').trigger('click');
+                }
+            });
+
+           // $('#sendButton').click(function () {
+           //     $('form').submit();
+           // });
+
+            $('form').submit(function () {
+                var txt = $('#m').val();
+                console.log(txt);
+                socket.emit('chat message', txt, room);
+                $('#messages').append($('<div class="chatmessagesend">').text(txt));
+                $('#messages').scrollTop(100000);
+                $('#m').val('');
+                return false;
 
             });
+
+            socket.on('chat message', function (msg) {
+                $('#messages').append($('<div class="chatmessagereceived">').text(msg));
+                $('#messages').scrollTop(100000);
+            });
         });
+
+        function appendchat() {
+            $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer"></p><p class="timestamp"></p> </div>');
+        }
     </script>
 </body>
 

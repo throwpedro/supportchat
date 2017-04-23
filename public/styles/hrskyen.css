@@ -1,4 +1,4 @@
-html{
+html {
     min-height: 100%;
     position: relative;
 }
@@ -7,70 +7,102 @@ body {
     height: 100%;
 }
 
-.pagewrapper{
+.pagewrapper {
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
     overflow: hidden;
-
 }
 
+
 /*left bar*/
-.leftchatwrapper{
+
+.leftchatwrapper {
     position: inherit;
     height: 100%;
     bottom: 0;
     background-color: #4f4f4f;
 }
 
-.title{
+.title {
     text-align: center;
     color: #bbc0cf;
 }
 
+
 /*center*/
-.mainchatwrapper{
+
+.mainchatwrapper {
     position: inherit;
     height: 100%;
     bottom: 0;
     background-color: #f7f7f9;
 }
 
-.mainchatheader{
+.mainchatheader {
     height: 10%;
 }
 
-.mainchatbody{
+.mainchatbody {
     height: 70%;
 }
 
-.chatbottom{
+.chatbottom {
     height: 20%;
 }
 
-.chatform{
+.chatform {
     height: 100%;
 }
 
-.chatform textarea{
+.chatform textarea {
     height: 100%;
 }
+
+.chatmessagereceived {
+    float: left;
+    background-color: #0098cc;
+    width: 60%;
+    padding: 5px 8px;
+    margin-left: 3px;
+    margin: 3px;
+    border: none;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    word-wrap: break-word;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.chatmessagesend {
+    float: right;
+    background-color: lightgrey;
+    width: 60%;
+    padding: 5px 8px;
+    margin-right: 3px;
+    margin: 3px;
+    border: none;
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    word-wrap: break-word;
+    font-family: 'Varela Round', sans-serif;
+}
+
 
 /*right bar*/
-.rightchatwrapper{
+
+.rightchatwrapper {
     position: inherit;
     height: 100%;
     bottom: 0;
     background-color: #4f4f4f;
 }
 
-.managertitle{
+.managertitle {
     color: #bbc0cf;
 }
 
-.companytitle{
+.companytitle {
     color: #bbc0cf;
 }
-

@@ -9,7 +9,6 @@
 </head>
 
 <body>
-    <!--my form-->
     <div class="chatwrapper">
         <div class="chattop">
             <div class="chatnamewrapper">
@@ -67,7 +66,7 @@
 
             $('form').submit(function () {
                 var txt = $('#m').val();
-                socket.emit('chat message', $('#m').val(), room);
+                socket.emit('chat message', txt, room);
                 $('#messages').append($('<div class="chatmessagesend">').text(txt));
                 $('#messages').scrollTop(100000);
                 $('#m').val('');
