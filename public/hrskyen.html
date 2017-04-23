@@ -22,6 +22,7 @@
         <div class="leftchatwrapper col-sm-3">
             <div class="leftchatheader col-sm-12">
                 <p class="title">Chat Conversations</p>
+                
             </div>
         </div>
         <div class="mainchatwrapper col-sm-6">
@@ -54,6 +55,9 @@
             </div>
         </div>
     </div>
+    <div class="insertonchat">
+
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
@@ -64,6 +68,7 @@
             socket.on('connectToRoom', function (data) {
                 room = data;
                 console.log(data);
+
             });
         });
     </script>
