@@ -56,18 +56,11 @@
         </div>
     </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        var room = "";
-        var connectedChats = [];
+        //var connectedChats = [];
         $(function () {
             var socket = io.connect('localhost', { port: 3000 });
-
-            socket.on('connectToRoom', function (data) {
-                room = data;
-                console.log(data);
-            });
-
+            console.log(socket);
             $('#m').keypress(function (e) {
                 if (e.which == 13 && !e.shiftKey) {
                     e.preventDefault();
@@ -75,33 +68,34 @@
                 }
             });
 
-           // $('#sendButton').click(function () {
-           //     $('form').submit();
-           // });
+            //$('#sendButton').click(function () {
+            //    $('form').submit();
+            //});
 
             $('form').submit(function () {
                 var txt = $('#m').val();
-                socket.emit('chat message', txt, room);
+                socket.emit('chat message', txt);
                 $('#messages').append($('<div class="chatmessagesend">').text(txt));
                 $('#messages').scrollTop(100000);
                 $('#m').val('');
                 return false;
-
-            });
+            });         
 
             socket.on('chat message', function (msg) {
                 //check if new connection and append chat
-                if(true == false){
-                appendchat();
+                console.log(msg);
+                if (true == false) {
+                    appendchat();
                 }
+                console.log("hej");
                 $('#messages').append($('<div class="chatmessagereceived">').text(msg));
                 $('#messages').scrollTop(100000);
             });
         });
 
-        function appendchat(socketid) {
-            $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer"></p><p class="timestamp"></p> </div>');
-        }
+        //function appendchat(socketid) {
+        //    $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer"></p><p class="timestamp"></p> </div>');
+        //}
     </script>
 </body>
 

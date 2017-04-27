@@ -48,10 +48,10 @@
         $(function () {
             var socket = io.connect('localhost', { port: 3000 });
 
-            socket.on('connectToRoom', function (data) {
-                room = data;
-                console.log(data);
-            });
+            //socket.on('connectToRoom', function (data) {
+            //    room = data;
+            //    console.log(data);
+            //});
 
             $('#m').keypress(function (e) {
                 if (e.which == 13 && !e.shiftKey) {
@@ -66,14 +66,15 @@
 
             $('form').submit(function () {
                 var txt = $('#m').val();
-                socket.emit('chat message', txt, room);
+                socket.emit('chat message', txt);
                 $('#messages').append($('<div class="chatmessagesend">').text(txt));
                 $('#messages').scrollTop(100000);
                 $('#m').val('');
                 return false;
-
             });
+
             socket.on('chat message', function (msg) {
+                console.log("ost");
                 $('#messages').append($('<div class="chatmessagereceived">').text(msg));
                 $('#messages').scrollTop(100000);
             });
