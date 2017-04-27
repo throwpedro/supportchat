@@ -68,10 +68,6 @@
                 }
             });
 
-            //$('#sendButton').click(function () {
-            //    $('form').submit();
-            //});
-
             $('form').submit(function () {
                 var txt = $('#m').val();
                 socket.emit('chat message', txt);
@@ -93,9 +89,9 @@
             });
         });
 
-        //function appendchat(socketid) {
-        //    $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer"></p><p class="timestamp"></p> </div>');
-        //}
+        function appendchat(socketid) {
+            $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer"></p><p class="timestamp"></p> </div>');
+        }
     </script>
 </body>
 
