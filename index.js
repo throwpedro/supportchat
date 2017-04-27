@@ -29,11 +29,6 @@ io.on('connection', function (socket) {
 
 });
 
-
-
-//var socketsconnected = io.sockets.sockets;
-
-
 io.on('connection', function (socket) {
   socket.on('chat message', function (msg, roomName) {
 
