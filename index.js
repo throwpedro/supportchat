@@ -24,7 +24,6 @@ io.on('connection', function (socket) {
     firstClient = false;
   }
   console.log("socketid: " + socket.id);
-
   io.sockets.in("room-" + roomNo).emit('connectToRoom', "room-" + roomNo);
 
 });
@@ -32,8 +31,9 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   socket.on('chat message', function (msg, roomName) {
 
-    // console.log(io.sockets.adapter.rooms);
-    // console.log(msg, roomName);
+   
+  io.to(socket.id).emit('chat message', msg);
+    
     socket.broadcast.to(roomName).emit('chat message', msg);
   });
 });
