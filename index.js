@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.get('/', function(req, res){
 //  res.sendFile(__dirname + '/customer.html');
 //});
-
+var firstClient = true;
 var roomNo = 1;
 io.on('connection', function (socket) {
   //console.log(io.nsps['/'].adapter.rooms["room-"+roomNo]);
@@ -20,7 +20,11 @@ io.on('connection', function (socket) {
     roomNo++;
   }
   socket.join("room-" + roomNo);
-
+  if (firstClient) {
+    socket.id = "hrskyen";
+    firstClient = false;
+  }
+  console.log("socketid: " + socket.id);
   //console.log(io.sockets.adapter.rooms);
   //console.log(io.sockets.clients().adapter.rooms);
   /*//talk only in your room.
@@ -29,7 +33,7 @@ io.on('connection', function (socket) {
   });*/
   //send to everyone in the room
   io.sockets.in("room-" + roomNo).emit('connectToRoom', "room-" + roomNo);
-  
+
 });
 
 
@@ -39,7 +43,7 @@ io.on('connection', function (socket) {
 
 io.on('connection', function (socket) {
   socket.on('chat message', function (msg, roomName) {
-    
+
     // console.log(io.sockets.adapter.rooms);
     // console.log(msg, roomName);
     socket.broadcast.to(roomName).emit('chat message', msg);
