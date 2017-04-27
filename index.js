@@ -31,7 +31,6 @@ io.on('connection', function (socket) {
 });
 
 io.on('connection', function (socket) {
-  console.log(socket);
   socket.on('chat message', function (msg) {
   
   console.log(socket.id);

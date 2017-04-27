@@ -55,11 +55,11 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
         //var connectedChats = [];
         $(function () {
-            var socket = io.connect('localhost', { port: 3000 });
+            var socket = io.connect('http://localhost:3000');
             console.log(socket);
             $('#m').keypress(function (e) {
                 if (e.which == 13 && !e.shiftKey) {
