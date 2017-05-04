@@ -16,11 +16,7 @@ var firstId = "";
 var roomNo = 1;
 io.on('connection', function (socket) {
   console.log("hej");
-  //if (io.nsps['/'].adapter.rooms["room-" + roomNo] && io.nsps['/'].adapter.rooms["room-" + roomNo].length > 1) {
-    //console.log(io.nsps['/'].adapter.rooms["room-"+roomNo]);
-  //  roomNo++;
-  //}
-  //socket.join("room-" + roomNo);
+  
   if (firstClient) {
     firstId = socket.id;
     firstClient = false;
