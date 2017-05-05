@@ -59,6 +59,7 @@
     <script>
         //var connectedChats = [];
         $(function () {
+            var connectionIds = [];
             var socket = io.connect('http://localhost:3000');
             console.log(socket);
             $('#m').keypress(function (e) {
@@ -77,20 +78,28 @@
                 return false;
             });         
 
-            socket.on('chat message', function (msg) {
+            /*socket.on('new chat', function(newsocket){
+                appendchat(newsocket.id);
+            });*/
+
+            socket.on('chat message', function (data) {
+                console.log(data.msg);
+                console.log(data.id);
+                if(!connectionIds.includes(data.id)){
+                    connectionIds.push(data.id);
+                    appendchat(data.id);
+                }
                 //check if new connection and append chat
-                console.log(msg);
                 if (true == false) {
                     appendchat();
                 }
-                console.log("hej");
-                $('#messages').append($('<div class="chatmessagereceived">').text(msg));
+                $('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
                 $('#messages').scrollTop(100000);
             });
         });
 
         function appendchat(socketid) {
-            $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer"></p><p class="timestamp"></p> </div>');
+            $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer">'+socketid+'</p><p class="timestamp"></p> </div>');
         }
     </script>
 </body>
