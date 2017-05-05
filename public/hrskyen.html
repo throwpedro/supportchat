@@ -31,9 +31,7 @@
             </div>
             <div class="mainchatbody">
                 <div id="messages">
-
                 </div>
-
             </div>
             <div class="chatbottom">
                 <form action="" class="chatform col-sm-12">
@@ -61,7 +59,6 @@
         $(function () {
             var connectionIds = [];
             var socket = io.connect('http://localhost:3000');
-            console.log(socket);
             $('#m').keypress(function (e) {
                 if (e.which == 13 && !e.shiftKey) {
                     e.preventDefault();
@@ -76,30 +73,31 @@
                 $('#messages').scrollTop(100000);
                 $('#m').val('');
                 return false;
-            });         
+            });
 
-            /*socket.on('new chat', function(newsocket){
-                appendchat(newsocket.id);
-            });*/
+            $
 
             socket.on('chat message', function (data) {
-                console.log(data.msg);
-                console.log(data.id);
-                if(!connectionIds.includes(data.id)){
+                if (!connectionIds.includes(data.id)) {
                     connectionIds.push(data.id);
                     appendchat(data.id);
-                }
-                //check if new connection and append chat
-                if (true == false) {
-                    appendchat();
                 }
                 $('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
                 $('#messages').scrollTop(100000);
             });
         });
+        $('.chatconversations').on('click', '.insertonchat', function () {
+            console.log(( $(this).find('> .customer').text()));
+            /*if($('.customer').text){
+             console.log(socketid);
+            }*/
+        });
+
+
 
         function appendchat(socketid) {
-            $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px;"><p class="customer">'+socketid+'</p><p class="timestamp"></p> </div>');
+            var time = new Date($.now());
+            $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px; margin-bottom: 5px;"><p class="customer">' + socketid + '</p><p class="timestamp">' + time + '</p> </div>');
         }
     </script>
 </body>
