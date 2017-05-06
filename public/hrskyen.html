@@ -56,8 +56,10 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         //var connectedChats = [];
+        var connectionIds = [];
+        var conversations = {};
         $(function () {
-            var connectionIds = [];
+
             var socket = io.connect('http://localhost:3000');
             $('#m').keypress(function (e) {
                 if (e.which == 13 && !e.shiftKey) {
@@ -68,32 +70,53 @@
 
             $('form').submit(function () {
                 var txt = $('#m').val();
-                socket.emit('chat message', txt);
-                $('#messages').append($('<div class="chatmessagesend">').text(txt));
-                $('#messages').scrollTop(100000);
-                $('#m').val('');
+                if (txt != '') {
+                    socket.emit('chat message', txt);
+                    $('#messages').append($('<div class="chatmessagesend">').text(txt));
+                    $('#messages').scrollTop(100000);
+                    $('#m').val('');
+                }
                 return false;
             });
 
-            $
+
 
             socket.on('chat message', function (data) {
                 if (!connectionIds.includes(data.id)) {
                     connectionIds.push(data.id);
                     appendchat(data.id);
+                    conversations[data.id] = "";
                 }
-                $('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
-                $('#messages').scrollTop(100000);
+                conversations[data.id] += data.msg + "|||";
+                console.log(conversations[data.id]);
+                //$('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
+                //$('#messages').scrollTop(100000);
             });
         });
         $('.chatconversations').on('click', '.insertonchat', function () {
-            console.log(( $(this).find('> .customer').text()));
-            /*if($('.customer').text){
-             console.log(socketid);
+            $('.mainchatbody').toggle();
+            $('.chatbottom').toggle();
+            $('#messages').empty();
+            console.log(($(this).find('> .customer').text()));
+            var cId = $(this).find('> .customer').text();
+
+            var messagesToPrint = conversations[cId].split("|||");
+            for (var i = 0; i < messagesToPrint.length; i++) {
+                console.log(messagesToPrint[i]);
+                if (messagesToPrint[i] != '') {
+                    $('#messages').append($('<div class="chatmessagereceived">').text(messagesToPrint[i]));
+                }
+
+            }
+            
+            //$('#messages').append($('<div class="chatmessagereceived">').text(conversations[cId]));
+            /*for(cId in conversations){
+                $('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
             }*/
         });
 
-
+        $('.mainchatbody').toggle();
+        $('.chatbottom').toggle();
 
         function appendchat(socketid) {
             var time = new Date($.now());
