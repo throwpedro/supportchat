@@ -79,8 +79,6 @@
                 return false;
             });
 
-
-
             socket.on('chat message', function (data) {
                 if (!connectionIds.includes(data.id)) {
                     connectionIds.push(data.id);
@@ -106,15 +104,12 @@
                 if (messagesToPrint[i] != '') {
                     $('#messages').append($('<div class="chatmessagereceived">').text(messagesToPrint[i]));
                 }
-
             }
-            
             //$('#messages').append($('<div class="chatmessagereceived">').text(conversations[cId]));
             /*for(cId in conversations){
                 $('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
             }*/
         });
-
         $('.mainchatbody').toggle();
         $('.chatbottom').toggle();
 
