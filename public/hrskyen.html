@@ -58,6 +58,8 @@
         //var connectedChats = [];
         var connectionIds = [];
         var conversations = {};
+        var completeConversation = {};
+        var cId = "";
         $(function () {
 
             var socket = io.connect('http://localhost:3000');
@@ -68,13 +70,21 @@
                 }
             });
 
-            $('form').submit(function () {
+            $('form').submit(function (e) {
+                e.preventDefault();
                 var txt = $('#m').val();
                 if (txt != '') {
                     socket.emit('chat message', txt);
+                    if (!conversations[socket.id]) {
+                        conversations[socket.id] = "";
+                    }
+                    conversations[socket.id] += txt + "|||";
+
                     $('#messages').append($('<div class="chatmessagesend">').text(txt));
                     $('#messages').scrollTop(100000);
                     $('#m').val('');
+                    completeConversation[cId] = $('#messages').html();
+                    console.log(completeConversation[cId] = $('#messages').html());
                 }
                 return false;
             });
@@ -85,33 +95,51 @@
                     appendchat(data.id);
                     conversations[data.id] = "";
                 }
+
                 conversations[data.id] += data.msg + "|||";
-                console.log(conversations[data.id]);
-                //$('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
-                //$('#messages').scrollTop(100000);
+                //TODO push to completeconversation[data.id] data.msg in div tag
+                if(!completeConversation[data.id]){
+                    completeConversation[data.id] = "";
+                }
+                completeConversation[data.id] += '<div class="chatmessagereceived">' + data.msg + '</div>';
+                console.log(completeConversation[data.id]);
             });
         });
         $('.chatconversations').on('click', '.insertonchat', function () {
-            $('.mainchatbody').toggle();
-            $('.chatbottom').toggle();
-            $('#messages').empty();
-            console.log(($(this).find('> .customer').text()));
-            var cId = $(this).find('> .customer').text();
-
+            $('.mainchatbody').hide();
+            $('.chatbottom').hide();
+            $('.mainchatbody').show('fast');
+            $('.chatbottom').show('fast');
+            //$('#messages').empty();
+            cId = $(this).find('> .customer').text();
+            //TODO spyt cId ud i noget globalt så det kan tilgåes fra submit.
+            if (!completeConversation[cId]) {
+                completeConversation[cId] = "";
+            }
             var messagesToPrint = conversations[cId].split("|||");
             for (var i = 0; i < messagesToPrint.length; i++) {
-                console.log(messagesToPrint[i]);
                 if (messagesToPrint[i] != '') {
                     $('#messages').append($('<div class="chatmessagereceived">').text(messagesToPrint[i]));
+                    //completeConversation[cId] = $('#messages').html();
+                    //console.log(completeConversation[cId]);
+                    //$('#messages').append(completeConversation[cId]);
+                    //$('#messages').append($('<div class="chatmessagereceived">').text(messagesToPrint[i]));
                 }
             }
+            $('#messages').empty();
+            $('#messages').append(completeConversation[cId]);
+
+            console.log(messagesToPrint);
+            //completeConversation[cId] = $('#messages').html();
+            console.log(completeConversation[cId]);
             //$('#messages').append($('<div class="chatmessagereceived">').text(conversations[cId]));
             /*for(cId in conversations){
                 $('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
             }*/
         });
-        $('.mainchatbody').toggle();
-        $('.chatbottom').toggle();
+
+        $('.mainchatbody').hide();
+        $('.chatbottom').hide();
 
         function appendchat(socketid) {
             var time = new Date($.now());
