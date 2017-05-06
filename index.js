@@ -21,7 +21,6 @@ io.on('connection', function (socket) {
     }
   }
   else if(!customerIds.includes(socket.id)){
-    console.log("push to customerids " + socket.id);
     customerIds.push(socket.id);
   }
 });
@@ -31,11 +30,7 @@ io.on('connection', function (socket) {
     //-----------------------------
     //send from customer to hrskyen
     //-----------------------------
-    console.log(socket.id);
-    console.log(customerIds);
-    console.log(skyIds);
     if (!skyIds.includes(socket.id)) {
-      console.log("hej2");
       for (var i = 0; i < skyIds.length; i++) {
         skyId = skyIds[i];
         io.to(skyId).emit('chat message', {msg: msg, id: socket.id});

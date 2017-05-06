@@ -61,11 +61,14 @@
 
             $('form').submit(function () {
                 var txt = $('#m').val();
+                if(txt != ''){
                 socket.emit('chat message', txt);
                 $('#messages').append($('<div class="chatmessagesend">').text(txt));
                 $('#messages').scrollTop(100000);
                 $('#m').val('');
-                return false;
+                
+            }
+            return false;
             });
 
             socket.on('chat message', function (msg) {
