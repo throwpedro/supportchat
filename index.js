@@ -13,40 +13,37 @@ var skyId = "";
 var skyIds = [];
 var customerIds = [];
 io.on('connection', function (socket) {
-  //push ids from all hrskyen clients to array
   if (socket.handshake.headers.referer == 'http://localhost:3000/hrskyen.html') {
     skyId = socket.id;
-    if(!skyIds.includes(skyId)){
-    skyIds.push(skyId);
+    if (!skyIds.includes(skyId)) {
+      skyIds.push(skyId);
     }
   }
-  else if(!customerIds.includes(socket.id)){
+  else if (!customerIds.includes(socket.id)) {
     customerIds.push(socket.id);
   }
 });
 
 io.on('connection', function (socket) {
-  socket.on('chat message', function (msg) {
+  socket.on('chat message', function (data) {
     //-----------------------------
     //send from customer to hrskyen
     //-----------------------------
     if (!skyIds.includes(socket.id)) {
       for (var i = 0; i < skyIds.length; i++) {
         skyId = skyIds[i];
-        io.to(skyId).emit('chat message', {msg: msg, id: socket.id});
+        io.to(skyId).emit('chat message', { msg: data, id: socket.id });
       }
     }
-    /*else if(customerIds.includes(socket.id)){
-      console.log("hej");
-      io.to(socket.id).emit('chat message', msg);
-    }*/
     //-----------------------------
     //end
     //-----------------------------
     //-----------------------------
     //send from hrksyen to customer
     //-----------------------------
-
+    if (customerIds.includes(data.id)) {
+      io.to(data.id).emit('chat message', data.msg);
+    }
     //-----------------------------
     //end
     //-----------------------------
