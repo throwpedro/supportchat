@@ -6,13 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles/hrskyen.css">
-    <!--     Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Hr-skyen</title>
 </head>
@@ -55,7 +50,6 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        //var connectedChats = [];
         var connectionIds = [];
         var conversations = {};
         var completeConversation = {};
@@ -74,7 +68,7 @@
                 e.preventDefault();
                 var txt = $('#m').val();
                 if (txt != '') {
-                    socket.emit('chat message', txt);
+                    socket.emit('chat message', { msg: txt, id: cId });
                     if (!conversations[socket.id]) {
                         conversations[socket.id] = "";
                     }
@@ -83,26 +77,27 @@
                     $('#messages').append($('<div class="chatmessagesend">').text(txt));
                     $('#messages').scrollTop(100000);
                     $('#m').val('');
+                    //Add everything to completeconversation.
                     completeConversation[cId] = $('#messages').html();
-                    console.log(completeConversation[cId] = $('#messages').html());
                 }
                 return false;
             });
-
             socket.on('chat message', function (data) {
+                //check if connection exists already.
                 if (!connectionIds.includes(data.id)) {
                     connectionIds.push(data.id);
                     appendchat(data.id);
                     conversations[data.id] = "";
                 }
-
+                //Add conversations to array for correct socket.
                 conversations[data.id] += data.msg + "|||";
-                //TODO push to completeconversation[data.id] data.msg in div tag
-                if(!completeConversation[data.id]){
+                if (!completeConversation[data.id]) {
                     completeConversation[data.id] = "";
                 }
+                //add received messages to complete conversation.
                 completeConversation[data.id] += '<div class="chatmessagereceived">' + data.msg + '</div>';
-                console.log(completeConversation[data.id]);
+                $('#messages').empty();
+                $('#messages').append(completeConversation[cId]);
             });
         });
         $('.chatconversations').on('click', '.insertonchat', function () {
@@ -110,9 +105,8 @@
             $('.chatbottom').hide();
             $('.mainchatbody').show('fast');
             $('.chatbottom').show('fast');
-            //$('#messages').empty();
+            //get customer id from gui. NOT IDEAL
             cId = $(this).find('> .customer').text();
-            //TODO spyt cId ud i noget globalt så det kan tilgåes fra submit.
             if (!completeConversation[cId]) {
                 completeConversation[cId] = "";
             }
@@ -120,22 +114,10 @@
             for (var i = 0; i < messagesToPrint.length; i++) {
                 if (messagesToPrint[i] != '') {
                     $('#messages').append($('<div class="chatmessagereceived">').text(messagesToPrint[i]));
-                    //completeConversation[cId] = $('#messages').html();
-                    //console.log(completeConversation[cId]);
-                    //$('#messages').append(completeConversation[cId]);
-                    //$('#messages').append($('<div class="chatmessagereceived">').text(messagesToPrint[i]));
                 }
             }
             $('#messages').empty();
             $('#messages').append(completeConversation[cId]);
-
-            console.log(messagesToPrint);
-            //completeConversation[cId] = $('#messages').html();
-            console.log(completeConversation[cId]);
-            //$('#messages').append($('<div class="chatmessagereceived">').text(conversations[cId]));
-            /*for(cId in conversations){
-                $('#messages').append($('<div class="chatmessagereceived">').text(data.msg));
-            }*/
         });
 
         $('.mainchatbody').hide();
