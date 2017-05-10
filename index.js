@@ -5,6 +5,9 @@ var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
+const low = require('lowdb');
+const db = low('db.json');
+db.defaults({ storedconversations: []}).write();
 
 app.use(express.static(__dirname + '/public'));
 
@@ -33,6 +36,7 @@ io.on('connection', function (socket) {
       for (var i = 0; i < skyIds.length; i++) {
         skyId = skyIds[i];
         io.to(skyId).emit('chat message', { msg: data, id: socket.id });
+        db.get('storedconversations').push({idfrom: socket.id, idto: skyId, message: data}).write();
       }
     }
     //-----------------------------
@@ -40,6 +44,12 @@ io.on('connection', function (socket) {
     //-----------------------------
     if (customerIds.includes(data.id)) {
       io.to(data.id).emit('chat message', data.msg);
+      db.get('storedconversations').push({idfrom: skyId, idto: data.id, message: data.msg}).write();
+    }
+  });
+  socket.on('disconnect', function(){
+    for (var i = 0; i < skyIds.length; i++) {
+      io.to(skyIds[i]).emit('client disconnect', socket.id);
     }
   });
 });

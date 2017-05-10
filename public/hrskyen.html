@@ -46,6 +46,9 @@
                     <p class="companyname panel panel-default">companyexample</p>
                 </div>
             </div>
+            <div class="closedconversations">
+
+            </div>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
@@ -99,6 +102,10 @@
                 $('#messages').empty();
                 $('#messages').append(completeConversation[cId]);
             });
+            socket.on('client disconnect', function (disconnectedsocketid) {
+                appenddiscchat(disconnectedsocketid);
+                $('.insertonchat:contains(' + disconnectedsocketid + ')').remove();
+            });
         });
         $('.chatconversations').on('click', '.insertonchat', function () {
             $('.mainchatbody').hide();
@@ -127,6 +134,11 @@
             var date = new Date();
             var time = date.toLocaleString();
             $('.chatconversations').append('<div class="insertonchat" style="background-color: green; height: 5em; width: 100%; border-radius: 5px; margin-bottom: 5px;"><p class="customer">' + socketid + '</p><p class="timestamp">' + time + '</p> </div>');
+        }
+        function appenddiscchat(socketid) {
+            var date = new Date();
+            var time = date.toLocaleString();
+            $('.closedconversations').append('<div class="insertondischat" style="background-color: red; height: 5em; width: 100%; border-radius: 5px; margin-bottom: 5px; display: inline-block"><p class="customer">' + socketid + '</p><p class="timestamp">' + time + '</p> </div>');
         }
     </script>
 </body>
