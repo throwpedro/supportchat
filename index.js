@@ -40,18 +40,12 @@ io.on('connection', function (socket) {
       }
     }
     //-----------------------------
-    //end
-    //-----------------------------
-    //-----------------------------
     //send from hrksyen to customer
     //-----------------------------
     if (customerIds.includes(data.id)) {
       io.to(data.id).emit('chat message', data.msg);
       db.get('storedconversations').push({idfrom: skyId, idto: data.id, message: data.msg}).write();
     }
-    //-----------------------------
-    //end
-    //-----------------------------
   });
   socket.on('disconnect', function(){
     for (var i = 0; i < skyIds.length; i++) {
