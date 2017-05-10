@@ -36,17 +36,11 @@ io.on('connection', function (socket) {
       }
     }
     //-----------------------------
-    //end
-    //-----------------------------
-    //-----------------------------
     //send from hrksyen to customer
     //-----------------------------
     if (customerIds.includes(data.id)) {
       io.to(data.id).emit('chat message', data.msg);
     }
-    //-----------------------------
-    //end
-    //-----------------------------
   });
 });
 http.listen(port, function () {
