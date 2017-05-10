@@ -1506,7 +1506,6 @@
       "idfrom": "cBOZpYBKnEnvLkQ0AAAq",
       "idto": "hFu7fmJAY5rq9mTnAAAp",
       "message": "astd"
-<<<<<<< HEAD
     },
     {
       "idfrom": "hcAkGooO_Hd81R8vAAAB",
@@ -1522,8 +1521,6 @@
       "idfrom": "Lh8QK0xvVINnojOGAAAA",
       "idto": "nEII4OSJsoEj3INPAAAC",
       "message": "ryghdfgh"
-=======
->>>>>>> eaa1d64... Can now write to database and some handling of disconnected clients implemented
     }
   ]
 }
