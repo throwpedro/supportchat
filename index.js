@@ -36,7 +36,8 @@ io.on('connection', function (socket) {
       for (var i = 0; i < skyIds.length; i++) {
         skyId = skyIds[i];
         io.to(skyId).emit('chat message', { msg: data, id: socket.id });
-        db.get('storedconversations').push({idfrom: socket.id, idto: skyId, message: data}).write();
+        time = new Date();
+        db.get('storedconversations').push({idfrom: socket.id, idto: skyId, message: data, timestamp: time}).write();
       }
     }
     //-----------------------------
@@ -44,13 +45,21 @@ io.on('connection', function (socket) {
     //-----------------------------
     if (customerIds.includes(data.id)) {
       io.to(data.id).emit('chat message', data.msg);
-      db.get('storedconversations').push({idfrom: skyId, idto: data.id, message: data.msg}).write();
+      time = new Date();
+      db.get('storedconversations').push({idfrom: skyId, idto: data.id, message: data.msg, timestamp: time}).write();
     }
   });
+  //User disconnect
   socket.on('disconnect', function(){
     for (var i = 0; i < skyIds.length; i++) {
       io.to(skyIds[i]).emit('client disconnect', socket.id);
     }
+  });
+  //get closed conversation
+  socket.on('old conversation', function(oldId){
+    var dbres = db.get('storedconversations');
+    var hej = dbres.find({idfrom: oldId}).value();
+    console.log(hej);
   });
 });
 http.listen(port, function () {
