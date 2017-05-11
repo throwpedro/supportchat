@@ -46,6 +46,9 @@
                     <p class="companyname panel panel-default">companyexample</p>
                 </div>
             </div>
+            <div class="closedcons">
+                <p>Closed conversations</p>
+            </div>
             <div class="closedconversations">
 
             </div>
@@ -106,6 +109,11 @@
                 appenddiscchat(disconnectedsocketid);
                 $('.insertonchat:contains(' + disconnectedsocketid + ')').remove();
             });
+            $('.closedconversations').on('click', '.insertondischat', function () {
+                var oldId = $(this).find('> .customer').text();
+                console.log(oldId);
+                socket.emit('old conversation', oldId);
+            });
         });
         $('.chatconversations').on('click', '.insertonchat', function () {
             $('.mainchatbody').hide();
@@ -126,6 +134,8 @@
             $('#messages').empty();
             $('#messages').append(completeConversation[cId]);
         });
+
+
 
         $('.mainchatbody').hide();
         $('.chatbottom').hide();
