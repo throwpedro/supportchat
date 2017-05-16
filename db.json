@@ -35,6 +35,30 @@
       "idto": "9w__Scu7vAjYBqEpAAAC",
       "message": "fuck db.json",
       "timestamp": "2017-05-16T15:27:07.298Z"
+    },
+    {
+      "idfrom": "J4uqgWuRqCc__-bdAAAD",
+      "idto": "x0JK6LmSvjrmnJP0AAAB",
+      "message": "hej",
+      "timestamp": "2017-05-16T20:12:15.464Z"
+    },
+    {
+      "idfrom": "J4uqgWuRqCc__-bdAAAD",
+      "idto": "WPdSiqXqmpBdvBebAAAC",
+      "message": "hej",
+      "timestamp": "2017-05-16T20:12:15.467Z"
+    },
+    {
+      "idfrom": "LZ_pWQN6E8uATMNZAAAE",
+      "idto": "x0JK6LmSvjrmnJP0AAAB",
+      "message": "hej hej",
+      "timestamp": "2017-05-16T20:12:44.608Z"
+    },
+    {
+      "idfrom": "LZ_pWQN6E8uATMNZAAAE",
+      "idto": "WPdSiqXqmpBdvBebAAAC",
+      "message": "hej hej",
+      "timestamp": "2017-05-16T20:12:44.609Z"
     }
   ]
 }
