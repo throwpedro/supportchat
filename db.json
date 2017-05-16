@@ -17,6 +17,24 @@
       "idto": "wWFMX-9AQywowAVJAAAB",
       "message": "asdf",
       "timestamp": "2017-05-11T13:53:28.426Z"
+    },
+    {
+      "idfrom": "9w__Scu7vAjYBqEpAAAC",
+      "idto": "QLzIgRlZyxQT46KgAAAA",
+      "message": "hej",
+      "timestamp": "2017-05-16T15:26:58.864Z"
+    },
+    {
+      "idfrom": "9w__Scu7vAjYBqEpAAAC",
+      "idto": "u3iGDhTN6y-RXaFoAAAB",
+      "message": "hej",
+      "timestamp": "2017-05-16T15:26:58.865Z"
+    },
+    {
+      "idfrom": "u3iGDhTN6y-RXaFoAAAB",
+      "idto": "9w__Scu7vAjYBqEpAAAC",
+      "message": "fuck db.json",
+      "timestamp": "2017-05-16T15:27:07.298Z"
     }
   ]
 }
