@@ -47,7 +47,7 @@
         var room = "";
         $(function () {
             var socket = io.connect('http://localhost:3000');
-
+            //'enter' key submits form
             $('#m').keypress(function (e) {
                 if (e.which == 13 && !e.shiftKey) {
                     e.preventDefault();
@@ -72,7 +72,6 @@
             });
 
             socket.on('chat message', function (msg) {
-                console.log("ost");
                 $('#messages').append($('<div class="chatmessagereceived">').text(msg));
                 $('#messages').scrollTop(100000);
             });

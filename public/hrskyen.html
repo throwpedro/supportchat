@@ -63,6 +63,7 @@
         $(function () {
 
             var socket = io.connect('http://localhost:3000');
+            //send on 'enter' keypress
             $('#m').keypress(function (e) {
                 if (e.which == 13 && !e.shiftKey) {
                     e.preventDefault();
@@ -74,6 +75,7 @@
                 e.preventDefault();
                 var txt = $('#m').val();
                 if (txt != '') {
+                    //emit to server and append to messagebox
                     socket.emit('chat message', { msg: txt, id: cId });
                     if (!conversations[socket.id]) {
                         conversations[socket.id] = "";
@@ -139,7 +141,7 @@
 
         $('.mainchatbody').hide();
         $('.chatbottom').hide();
-
+        //add boxes in side bars
         function appendchat(socketid) {
             var date = new Date();
             var time = date.toLocaleString();

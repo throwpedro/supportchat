@@ -16,6 +16,7 @@ var skyId = "";
 var skyIds = [];
 var customerIds = [];
 io.on('connection', function (socket) {
+  //check for support client or customer client
   if (socket.handshake.headers.referer == 'http://localhost:3000/hrskyen.html') {
     skyId = socket.id;
     if (!skyIds.includes(skyId)) {
